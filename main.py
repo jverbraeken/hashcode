@@ -1,5 +1,6 @@
 import itertools
 import os
+import sys
 
 DIR_EXAMPLES = "examples"
 
@@ -37,8 +38,8 @@ def recursive(pairwise_if, my_list, is_first_vertical_one, just_had_two_vertical
                     best = max(best[0], tmp[0] + pairwise_if[my_list[-1]][i]), tmp[1]
     return best
 
-
-name = "a_example.txt"
+sys.setrecursionlimit()
+name = "c_memorable_moments.txt"
 pictures = []
 file = open(os.path.join(DIR_EXAMPLES, name), 'r')
 lines = file.readlines()
@@ -54,15 +55,12 @@ for i in range(1, num + 1):
     pictures.append((orientation, tags))
 num_pictures = len(pictures)
 pairwise_if = [[0 for x in range(num_pictures)] for y in range(num_pictures)]
-for i in range(2, num_pictures):
-    permutations = list(itertools.combinations(range(num_pictures), i))
-    print(permutations)
-    for j in permutations:
-        interest_factor = get_interest_factor(pictures[j[0]][1], pictures[j[1]][1])
-        pairwise_if[j[0]][j[1]] = interest_factor
-        pairwise_if[j[1]][j[0]] = interest_factor
-
 permutations = list(itertools.combinations(range(num_pictures), 2))
+for j in permutations:
+    interest_factor = get_interest_factor(pictures[j[0]][1], pictures[j[1]][1])
+    pairwise_if[j[0]][j[1]] = interest_factor
+    pairwise_if[j[1]][j[0]] = interest_factor
+
 for i in range(len(permutations)):
     permutations.append((permutations[i][1], permutations[i][0]))
 
