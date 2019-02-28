@@ -2,6 +2,11 @@ import os
 
 DIR_EXAMPLES = "examples"
 
+
+def get_interest_factor(set1, set2):
+    return min(set1 - set2, set2 - set1, set1.intersection(set2))
+
+
 def parse_file():
     name = "a_example.txt"
 
@@ -15,9 +20,10 @@ def parse_file():
         terms = line.split(" ")
         orientation = terms[0]
         numTags = int(terms[1])
-        tags = []
+        tags = set()
         for j in range(numTags):
-            tags.append(terms[2+j])
+            tags.add(terms[2 + j])
         pictures.append((orientation, tags))
+
 
 parse_file()
